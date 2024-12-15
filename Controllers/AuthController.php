@@ -7,23 +7,28 @@ class AuthController extends Controller
 {
     public static function login()
     {
-        if(count($_POST) > 0)
-        {
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $username = $_POST['username'];
             $password = $_POST['password'];
 
+            if (empty($username) || empty($password)) {
+                $_SESSION["error"] = "Semua field harus diisi!";
+                header("location: /login");
+                die();
+            }
 
-           if ($username == "" || $password == "") {
-            $_SESSION["error"] = "All fields must be filled!";
-            $_SESSION["username"] = $username;
-            header("location: /login");
-            die();
-
+            if (User::auth($username, $password)) {
+                header("location: /membership"); // Redirect ke halaman membership setelah login
+                die();
+            } else {
+                $_SESSION["error"] = "Username atau password salah!";
+                header("location: /login");
+                die();
+            }
         }
-        User::auth($username, $password);
-    }
         return self::view('Views/login.php');
     }
+
     public static function register()
     {
         if(count($_POST) > 0)
@@ -47,8 +52,7 @@ class AuthController extends Controller
     }
 }
 
-if($uri == '/login')
-{
+if ($uri == '/login') {
     return AuthController::login();
 }
 AuthController::register();
