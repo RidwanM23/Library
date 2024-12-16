@@ -5,8 +5,8 @@ class MembershipController extends Controller
 {
     public static function index()
     {
-        return self::view ('Views/membership.php');
+        return self::view('Views/membership.php');
     }
 }
 
-MembershipController::index();
+MembershipController::index(); 

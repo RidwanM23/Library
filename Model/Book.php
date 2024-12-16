@@ -3,21 +3,21 @@
 require_once 'config/database.php';
 
 class Book {
-    private $id, $tittle, $author, $year;
+    private $id, $title, $author, $year;
     
-    function getId()
+    public function getId()
     {
         return $this->id;
     }
-    function getTittle()
+    public function getTitle()
     {
-        return $this->tittle;
+        return $this->title;
     }
-    function getAuthor()
+    public function getAuthor()
     {
         return $this->author;
     }
-    function getYear()
+    public function getYear()
     {
         return $this->year;
     }
@@ -25,13 +25,16 @@ class Book {
     static function filter ($search)
     {
         global $pdo;
-        $query = $pdo->query("SELECT * FROM books WHERE tittle LIKE '$search%'");
+        $query = $pdo->prepare("SELECT * FROM books WHERE title LIKE ?");
+        $query->execute([$search . '%']);
         return $query->fetchAll(PDO::FETCH_CLASS, 'Book');
     }
 
     static function get (){
         global $pdo;
-        $query = $pdo->query("SELECT * FROM books");
-        return $query->fetchAll(PDO::FETCH_CLASS, 'Book');
+        $sql = "SELECT * FROM books";
+        $stmt = $pdo->prepare($sql);
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_CLASS, 'Book');
     }
 }

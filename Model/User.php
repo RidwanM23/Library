@@ -1,7 +1,7 @@
 <?php
 require_once 'config/database.php';
 
-class user {
+class User {
     private $id, $username, $password, $role_id;
 
     public function __construct(
@@ -18,19 +18,21 @@ class user {
     {
         try {
             global $pdo;
-            $sql = "SELECT * FROM users WHERE username='" . $username . "'";
-            $query = $pdo->query($sql);
-            $user = $query->fetchAll(PDO::FETCH_CLASS, 'User');
+            $sql = "SELECT * FROM members WHERE username='" . $username . "'";
+            $stmt = $pdo->prepare($sql);
+            $stmt->execute();
+            $userData = $stmt->fetch(PDO::FETCH_ASSOC);
 
-            if(count($user) == 0) {
+            if (!$userData) {
                 $_SESSION["username"] = $username;
                 $_SESSION["error"] = "$username unregistered";
                 header("location: /login");
                 die();
             }
 
-            if (password_verify($password, $user[0]->password))
-            {
+            $user = new User($userData['username'], $userData['password'], $userData['role_id']);
+
+            if (password_verify($password, $user->password)) {
                 $_SESSION['is_login'] = true;
                 $_SESSION['username'] = $username;
                 header("location: /membership");
@@ -42,14 +44,14 @@ class user {
         }
         catch (PDOException $e)
         {
-            echo $user . "<br/>" . $e->getMessage(); 
+            echo $e->getMessage(); 
         }
     }
 
     public function registerUser()
     {
         global $pdo;
-        $sql = "INSERT INTO users (username, password, role_id) VALUES ('$this->username', '$this->password', $this->role_id)";
+        $sql = "INSERT INTO members (username, password, role_id) VALUES ('$this->username', '$this->password', $this->role_id)";
 
         try {
             $pdo->exec($sql);

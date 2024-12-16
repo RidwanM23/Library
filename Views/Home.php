@@ -119,7 +119,6 @@ body {
             <li><a href="#">Home</a></li>
             <li><a href="#About">About Us</a></li>
             <li><a href="/Book">Book</a></li>
-            <li><a href="#">Category</a></li>
             <li><a href="#">Contact Us</a></li>
         </ul>
         <div class="search-icon"></div>
@@ -129,7 +128,7 @@ body {
     <section class="main-section">
         <h1>WELCOME TO BEAU <span style="color: red;">LIBRARY</span></h1>
         <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>
-        <button class="btn">GET STARTED</button>
+        <button class="btn btn-primary" onclick="window.location.href='/Book'">Pinjam Buku</button>
     </section>
 
     <div class="About" id="About">

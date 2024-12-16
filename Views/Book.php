@@ -168,10 +168,11 @@ if(!defined('SECURE_ACCESS')){
         <div>
             <div class="logo">BEAU <span style="color: red;">LIBRARY</span></div>
             <ul class="menu">
-                <li><a href="#"><i class="fas fa-user"></i>Profile</a></li>
-                <li><a href="Home.php"><i class="fas fa-home"></i>Home</a></li>
-                <li><a href="#"><i class="fas fa-book"></i>Books</a></li>
-                <li><a href="#"><i class="fas fa-save"></i>Shop Chart</a></li>
+                <li><a href="#">Profile</a></li>
+                <li><a href="Home.php">Home</a></li>
+                <li><a href="/borrow">Pinjam atau kembalikan buku</a></li>
+                <li><a href="#">Books</a></li>
+                <li><a href="#">Shop Chart</a></li>
             </ul>
         </div>
         <div class="contact">Contact us</div>
@@ -211,7 +212,7 @@ if(!defined('SECURE_ACCESS')){
                 <?php foreach ($data as $book):?>
                     <tr>
                         <th><?=$number++?></th>
-                        <th><?=$book->getTittle()?></th>
+                        <th><?=$book->getTitle()?></th>
                         <th><?=$book->getAuthor()?></th>
                         <th><?=$book->getYear()?></th>
                     </tr>
