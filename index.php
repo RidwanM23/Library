@@ -26,12 +26,6 @@ if ($uri == "/visitor") {
 if ($uri == "/membership") {
     return require "Controllers/MembershipController.php";
 }
-if ($uri == "/borrow") {
-    return require "Controllers/TransactionController.php";
-}
-if ($uri == "/fines") {
-    return require "Controllers/BorrowController.php";
-}
 
 return require 'Views/notFoundPage.php';
 

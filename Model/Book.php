@@ -32,9 +32,7 @@ class Book {
 
     static function get (){
         global $pdo;
-        $sql = "SELECT * FROM books";
-        $stmt = $pdo->prepare($sql);
-        $stmt->execute();
-        return $stmt->fetchAll(PDO::FETCH_CLASS, 'Book');
+        $query = $pdo->query("SELECT * FROM books");
+        return $query->fetchAll(PDO::FETCH_CLASS, 'Book');
     }
 }
